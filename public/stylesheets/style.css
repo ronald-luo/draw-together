@@ -1,0 +1,13 @@
+*, *::before, *::after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+canvas {
+  border: 1px solid black;
+}
+
+a {
+  color: #00B7FF;
+}
+/*# sourceMappingURL=style.css.map */
