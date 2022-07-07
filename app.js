@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+
 var indexRouter = require('./routes/index');
 
 var app = express();
@@ -15,6 +16,7 @@ const io = require("socket.io")(httpServer, options);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+// app.set('socketio', io);
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -40,18 +42,15 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-function ImageData(data, width, height, colorSpace) {
-  this.data = data;
-  this.width = width;
-  this.height = height;
-  this.colorSpace = colorSpace;
-}
-
 io.on('connection', socket => {
-  console.log("New user connected")
+  socket.on('join room', (data) => {
+    console.log("New user connected to " + data.room)
+    socket.join(data.room)
+    socket.to(data.room).emit('alert others', {alert: 'someone has joined.'})
+  })
 
   socket.on("send_draw", (data) => {
-    io.sockets.emit('receive_draw', {png: data.png})
+    socket.to(data.room).emit('receive_draw', {png: data.png})
   })
 })
 

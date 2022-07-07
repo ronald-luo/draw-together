@@ -2,11 +2,119 @@
     box-sizing: border-box;
 }
 
+h1 {
+    font-family: "Poppins";
+    font-size: 60px;
+}
+
 canvas {
-    border: 1px solid black;
+    // border: 1px solid black;
+}
+
+.active-users {
+    // border: 1px solid black;
+    height: 60px;
+    width: 500px;
+    position: absolute;
+    left: 60px;
+    display: flex;
+    align-items: center;
+
+    .user {
+        background-color: lightgreen;
+        width: 30px;
+        height: 30px;
+        margin: 0 10px 0 10px;
+        border-radius: 5px;
+    }
+
 }
   
-a {
-color: #00B7FF;
+.menu {
+    top: 0;
+    height: auto;
+    width: 50px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: #302E40;
+    display: flex;
+    flex-direction: column;
+
+    small {
+        font-family: "Poppins";
+        color: white;
+        font-size: 14px;
+    }
+
+    .icon-container {
+        width: auto;
+        height: 40px;
+        display: flex;
+        place-items: center;
+        justify-content: center;
+        margin: 0px 0 15px 0;
+
+        &:hover {
+            transition: 0.3s;
+            cursor: pointer;
+            background-color: #D9D9D9;
+
+            small {
+                color: black;
+            }
+
+            svg {
+                filter: brightness(0) invert(0);
+            }
+        }
+
+        svg {
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+    #ghost-container, #github-container {
+        position: relative;
+        top: 30vh;
+    }
 }
-  
+
+.copied-alert {
+    opacity: 0;
+    position: absolute;
+    top: -10%;
+    left: 50%;
+    width: 300px;
+    height: 100px;
+    margin: -50px 0 0 -150px;
+    // width: 0;
+    // height: 0;
+}
+
+.alert {
+    opacity: 100%;
+    text-align: center;
+    width: 300px;
+    height: 100px;
+    top: 10%;
+    left: 50%;
+    margin: -50px 0 0 -150px;
+    font-family: "Poppins";
+    transition: 0.3s;
+}
+
+.colorSwitch {
+    position: absolute;
+    width: 50px;
+    height: 40px;
+    bottom: 5%;
+    left: 80px;
+    opacity: 100%;
+    cursor: pointer;
+}
+
+.colorSwitchInactive{
+    opacity: 0%;
+}

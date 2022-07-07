@@ -2,7 +2,14 @@
 <html lang="en">
     <%- include('./extends/head.ejs') -%> 
     <body>
-        <a>Hello World</a>
-    </body>
+        <main>
+            <h1>Draw Together</h1>
 
+            <form method="POST" action="/create-room">
+                <input type="color" name="color">
+                <input id="submit" type="submit" value="Create Room"/>
+            </form>
+        </main>
+    </body>
+    <script src="./javascripts/home.js"></script>
 </html>

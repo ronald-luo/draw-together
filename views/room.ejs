@@ -2,8 +2,59 @@
 <html lang="en">
     <%- include('./extends/head.ejs') -%> 
     <body>
+
+        <div class="copied-alert"></div>
+
+        <aside class="menu">
+            <div class="icon-container">
+                <small class="roomID" id="<%= roomID %>"><%= roomID %></small>
+            </div>
+            <div class="icon-container">
+                <a href="/">
+                    <svg id=""><use xlink:href="#home"></use></svg>
+                </a>
+            </div>
+            <div id="clipboard" class="icon-container">
+                <svg><use xlink:href="#clipboard"></use></svg>
+            </div>
+            <div class="icon-container">
+                <svg id=""><use xlink:href="#pencil"></use></svg>
+            </div>
+            <div id="color-icon" class="icon-container">
+                <svg><use xlink:href="#color"></use></svg>
+            </div>
+            <div id="undo-icon" class="icon-container">
+                <svg><use xlink:href="#undo"></use></svg>
+            </div>
+            <div id="redo-icon" class="icon-container">
+                <svg><use xlink:href="#redo"></use></svg>
+            </div>
+            <div id="new-icon" class="icon-container">
+                <svg><use xlink:href="#new"></use></svg>
+            </div>
+            <div id="github-container" class="icon-container">
+                <a href="https://github.com/ronald-luo/draw-together">
+                    <svg id="github-icon"><use xlink:href="#github"></use></svg>
+                </a>
+            </div>
+            <div id="ghost-container" class="icon-container">
+                <a href="https://www.ronald-luo.com/100-websites/">
+                    <svg id="ghost-icon"><use xlink:href="#ghost"></use></svg>
+                </a>
+            </div>
+        </aside>
+
+        <div class="active-users">
+            <!-- <div class="user"></div>
+            <div class="user"></div>
+            <div class="user"></div> -->
+        </div>
+
         <canvas></canvas>
+
+        <input class="colorSwitch colorSwitchInactive" type="color">
     </body>
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="./javascripts/room.js"></script>
 </html>
