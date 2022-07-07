@@ -3,10 +3,12 @@
     <%- include('./extends/head.ejs') -%> 
     <body>
         <main>
-            <h1>Draw Together</h1>
+            <h1>Draw With Me</h1>
+
+            <p>Choose a color, create a room, and draw with friends</p>
 
             <form method="POST" action="/create-room">
-                <input type="color" name="color">
+                <input type="color" name="color" class="home-color">
                 <input id="submit" type="submit" value="Create Room"/>
             </form>
         </main>

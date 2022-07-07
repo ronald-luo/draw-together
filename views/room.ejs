@@ -3,8 +3,6 @@
     <%- include('./extends/head.ejs') -%> 
     <body>
 
-        <div class="copied-alert"></div>
-
         <aside class="menu">
             <div class="icon-container">
                 <small class="roomID" id="<%= roomID %>"><%= roomID %></small>
@@ -17,8 +15,11 @@
             <div id="clipboard" class="icon-container">
                 <svg><use xlink:href="#clipboard"></use></svg>
             </div>
-            <div class="icon-container">
-                <svg id=""><use xlink:href="#pencil"></use></svg>
+            <div id="pencil-icon" class="icon-container">
+                <svg><use xlink:href="#pencil"></use></svg>
+            </div>
+            <div id="bucket-icon" class="icon-container">
+                <svg><use xlink:href="#bucket"></use></svg>
             </div>
             <div id="color-icon" class="icon-container">
                 <svg><use xlink:href="#color"></use></svg>
@@ -32,27 +33,39 @@
             <div id="new-icon" class="icon-container">
                 <svg><use xlink:href="#new"></use></svg>
             </div>
-            <div id="github-container" class="icon-container">
-                <a href="https://github.com/ronald-luo/draw-together">
-                    <svg id="github-icon"><use xlink:href="#github"></use></svg>
-                </a>
-            </div>
-            <div id="ghost-container" class="icon-container">
-                <a href="https://www.ronald-luo.com/100-websites/">
-                    <svg id="ghost-icon"><use xlink:href="#ghost"></use></svg>
-                </a>
+
+            <div class="social-urls">
+                <div id="github-container" class="icon-container">
+                    <a href="https://github.com/ronald-luo/draw-together">
+                        <svg id="github-icon"><use xlink:href="#github"></use></svg>
+                    </a>
+                </div>
+                <div id="ghost-container" class="icon-container">
+                    <a href="https://www.ronald-luo.com/100-websites/">
+                        <svg id="ghost-icon"><use xlink:href="#ghost"></use></svg>
+                    </a>
+                </div>
             </div>
         </aside>
 
+        <small class="active-user-count">1 active user</small>
+
         <div class="active-users">
-            <!-- <div class="user"></div>
             <div class="user"></div>
-            <div class="user"></div> -->
         </div>
+
+
+        <div class="userColor" id="<%= userColor %>"></div>
+        <div class="copied-alert"></div>
 
         <canvas></canvas>
 
-        <input class="colorSwitch colorSwitchInactive" type="color">
+        <input class="colorSwitch" type="color">
+        <input class="fillSwitch" type="color">
+
+        <div class="pencil-settings">
+            <input class="sizeSwitch" type="range" min="1" max="100" value="10">
+        </div>
     </body>
 
     <script src="/socket.io/socket.io.js"></script>

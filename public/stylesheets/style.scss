@@ -1,18 +1,148 @@
+$tablet: 768px;
+$desktop: 1024px;
+
+@mixin tablet {
+    @media(min-width: #{$tablet}) {
+        @content
+    }
+};
+
+@mixin desktop {
+    @media(min-width: #{$desktop}) {
+        @content
+    }
+};
+
 *, *::before, *::after {
     box-sizing: border-box;
 }
 
-h1 {
-    font-family: "Poppins";
-    font-size: 60px;
+body, html {
+    min-height: 100%;
+    overflow-y: none;
+    overflow-x: none;
 }
 
-canvas {
-    // border: 1px solid black;
+.fill-crosshair {
+    cursor: crosshair;
+}
+
+main {
+    margin: 20vh auto 0 auto;
+    width: 375px;
+    height: 400px;
+    text-align: center;
+    padding: 10px;
+
+
+    h1 {
+        font-family: "Cabin Sketch";
+        font-size: 60px;
+    }
+
+    p {
+        margin: 15px auto 0 auto;
+        font-family: "Poppins";
+        font-size: 12px;
+        line-height: 19px;
+        color: #787878;
+        width: 230px;
+        text-align: center;
+    }
+
+    form {
+        margin-top: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #submit {
+        font-family: "Cabin Sketch";
+        height: 40px;
+        width: 200px;
+        color: black;
+        background:transparent;
+        padding:0.5rem 0.5rem;
+        margin:0 0.5rem;
+        font-size:1rem;
+        border-top-left-radius: 255px 15px;
+        border-top-right-radius: 15px 225px;
+        border-bottom-right-radius: 225px 15px;
+        border-bottom-left-radius:15px 255px;
+        border:solid 3px #41403E;
+        &:hover {
+            transition: 0.3s;
+            cursor: pointer;
+            border: dashed 3px #41403E;
+            background-color: #ebebeb;
+        }
+    }
+
+    .home-color {
+        height: 40px;
+        cursor: pointer;
+    }
+
+    @include tablet {
+        position: absolute;
+        width: 650px;
+        height: 400px;
+        left: 50%;
+        top: 40%;
+        margin: -200px 0 0 -325px;
+        padding: 10px;
+        text-align: center;
+
+        h1 {
+            font-size: 120px;
+        }
+
+        p {
+            font-size: 20px;
+            width: 400px;
+            line-height: 32px;
+        }
+
+        #submit {
+            width: 450px;
+            height: 50px;
+            font-size: 23px;
+        }
+
+        .home-color {
+            height: 50px;
+        }
+    }
+}
+
+.userColor {
+    height: 0;
+    width: 0;
+    opacity: 0;
+}
+
+.active-user-count {
+    font-family: "Poppins";
+    position: absolute;
+    left: 70px;
+    top: 60px;
+    font-size: 14px;
+    animation-name: user-count;
+    animation-duration: 0.3s;
+
+    @keyframes user-count {
+        0% {
+            opacity: 0%;
+        }
+        100% {
+            opacity: 100%;
+        }
+    }
 }
 
 .active-users {
-    // border: 1px solid black;
+    transition: 0.3s;
     height: 60px;
     width: 500px;
     position: absolute;
@@ -27,7 +157,6 @@ canvas {
         margin: 0 10px 0 10px;
         border-radius: 5px;
     }
-
 }
   
 .menu {
@@ -75,9 +204,20 @@ canvas {
         }
     }
 
-    #ghost-container, #github-container {
+    .social-urls {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
         position: relative;
-        top: 30vh;
+        margin-top: auto;
+    }
+
+    .activeIcon {
+        transition: 0.3s;
+        background-color: #D9D9D9;
+        svg {
+            filter: brightness(0) invert(0);
+        }
     }
 }
 
@@ -89,8 +229,6 @@ canvas {
     width: 300px;
     height: 100px;
     margin: -50px 0 0 -150px;
-    // width: 0;
-    // height: 0;
 }
 
 .alert {
@@ -109,12 +247,48 @@ canvas {
     position: absolute;
     width: 50px;
     height: 40px;
+    opacity: 0%;
     bottom: 5%;
-    left: 80px;
-    opacity: 100%;
-    cursor: pointer;
+    left: -80px;
 }
 
-.colorSwitchInactive{
+.colorSwitchActive{
+    transition: 0.5s;
+    cursor: pointer;
+    opacity: 100%;
+    bottom: 5%;
+    left: 80px;
+}
+
+.pencil-settings {
+    position: absolute;
+    width: 50px;
+    height: 40px;
     opacity: 0%;
+    bottom: 10%;
+    left: -80px;
+}
+
+.pencilSettingsActive {
+    transition: 0.5s;
+    opacity: 100%;
+    bottom: 10%;
+    left: 80px;
+}
+
+.fillSwitch {
+    position: absolute;
+    width: 50px;
+    height: 40px;
+    opacity: 0%;
+    bottom: 5%;
+    left: -80px;
+}
+
+.fillSwitchActive {
+    transition: 0.5s;
+    cursor: pointer;
+    opacity: 100%;
+    bottom: 5%;
+    left: 160px;
 }

@@ -1,5 +1,4 @@
 document.querySelector('#submit').addEventListener('click', (e) => {
-    e.preventDefault();
     const endpoint = `/create-room`
     fetch(endpoint, {
         method: 'POST'
