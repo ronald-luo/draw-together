@@ -29,7 +29,7 @@ const createRoom = (req, res, next) => {
   
     activeRooms.add(id)
     userColor = req.body.color 
-    res.json({ redirect: `/${id}`})
+    res.redirect(id)
 };
 
 module.exports = {
