@@ -79,6 +79,19 @@ window.addEventListener('load', () => {
     
     setColor() // set color start
 
+    // no tool selected alert
+
+    const noToolAlert = () => {
+        /* Alert no tool selected */
+        const noToolAlert = document.querySelector('.no-selected-tool')
+        noToolAlert.classList.add('no-tool-alert');
+        noToolAlert.textContent = 'Select a tool on the left.'
+
+        setTimeout(() => {
+            noToolAlert.classList.remove('no-tool-alert');
+        }, 3000);
+    }
+
     // painting
 
     let painting = false;
@@ -86,26 +99,30 @@ window.addEventListener('load', () => {
     // pen down
 
     const startPos = (e) => {
-        painting = true;
-        draw(e)
+        const pencilActive = document.querySelector('#pencil-icon');
+        const bucketActive = document.querySelector('#bucket-icon')
+
+        if (bucketActive.classList.contains('activeIcon')) {
+            fillScreen()
+        }
+        else if (pencilActive.classList.contains('activeIcon')) {
+            context.beginPath();
+            painting = true;
+            draw(e)
+        } else {
+            noToolAlert()
+        }
     }
 
-    // pen up
+    // bucket fill
 
-    const stopPos = () => {
-        painting = false;
+    const fillScreen = () => {
         context.beginPath();
+        context.rect(0, 0, window.innerWidth, window.innerHeight);
+        context.fillStyle = fillColor;
+        context.fill();
 
-        // use fill bucket if bucket icon is active
-
-        const isActive = document.querySelector('#bucket-icon')
-
-        if (isActive.classList.contains('activeIcon')) {
-            context.beginPath();
-            context.rect(0, 0, window.innerWidth, window.innerHeight);
-            context.fillStyle = fillColor;
-            context.fill();
-        }
+        // emit to server and push to stack
 
         socket.emit('send_draw', {png: canvas.toDataURL(), room: roomID}) // emit canvas to server
         stack.push(canvas.toDataURL()) // add current state to stack
@@ -115,7 +132,7 @@ window.addEventListener('load', () => {
         if (redo.length > 0) {
             redo = []
         }
-    }
+    };
 
     // draw
 
@@ -123,13 +140,34 @@ window.addEventListener('load', () => {
         if (!painting) {
             return
         }
-        
         context.lineWidth = currentSize;
         context.lineCap = 'round';
         context.lineTo(e.clientX, e.clientY);
         context.stroke();
         context.beginPath();
         context.moveTo(e.clientX, e.clientY);
+    }
+
+    // pen up
+
+    const stopPos = () => {
+        const pencilActive = document.querySelector('#pencil-icon');
+
+        if (pencilActive.classList.contains('activeIcon')) {
+            painting = false;
+            context.beginPath();
+    
+            // emit to server and push to stack
+        
+            socket.emit('send_draw', {png: canvas.toDataURL(), room: roomID}) // emit canvas to server
+            stack.push(canvas.toDataURL()) // add current state to stack
+    
+            // reset redo stack if user draws and redo stack is not empty
+    
+            if (redo.length > 0) {
+                redo = []
+            }
+        }
     }
 
     // undo functions
@@ -211,7 +249,18 @@ window.addEventListener('load', () => {
 
     // pencil settings
 
-    const handlePencil = () => {
+    var handlePencil = () => {
+
+        // deactivate bucket icon if it is active
+        const bucketActive = document.querySelector('#bucket-icon')
+        if (bucketActive.classList.contains('activeIcon')) {
+            handleBucket()
+        }
+
+        // add color picker
+
+        handleColorPencil()
+
         const pencilIcon = document.querySelector('#pencil-icon');
         pencilIcon.classList.toggle('activeIcon');
 
@@ -227,9 +276,6 @@ window.addEventListener('load', () => {
     // color picker
 
     const handleColorPencil = () => {
-        const colorIcon = document.querySelector('#color-icon');
-        colorIcon.classList.toggle('activeIcon');
-
         const colorSwitch = document.querySelector('.colorSwitch');
         colorSwitch.classList.toggle('colorSwitchActive');
     };
@@ -242,13 +288,23 @@ window.addEventListener('load', () => {
 
     // fill bucket
 
-    const handleBucket = () => {
+    var handleBucket = () => {
+
+        // de-activate pencilIcon if it is active.
+        const pencilActive = document.querySelector('#pencil-icon');
+
+        if (pencilActive.classList.contains('activeIcon')) {
+            handlePencil()
+        }
+
+        // toggle active icon
         const bucketIcon = document.querySelector('#bucket-icon');
         bucketIcon.classList.toggle('activeIcon');
 
         bucketIcon.toggleAttribute('isActive', 'isActive')
         document.body.classList.toggle('fill-crosshair') // toggle crosshair when fill is active
 
+        // create color picker
         const fillSwitch = document.querySelector('.fillSwitch');
         fillSwitch.classList.toggle('fillSwitchActive');
     };
@@ -325,7 +381,6 @@ window.addEventListener('load', () => {
     document.querySelector('.sizeSwitch').addEventListener('input', changeSize)
     document.querySelector('#bucket-icon').addEventListener('click', handleBucket)
     document.querySelector('.fillSwitch').addEventListener('input', changeColorBucket);
-    document.querySelector('#color-icon').addEventListener('click', handleColorPencil);
     document.querySelector('.colorSwitch').addEventListener('input', changeColorPencil);
     document.querySelector('#undo-icon').addEventListener('click', handleUndo);
     document.querySelector('#redo-icon').addEventListener('click', handleRedo);

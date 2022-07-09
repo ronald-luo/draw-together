@@ -78,6 +78,7 @@ main {
             background-color: #ebebeb;
         }
     }
+    
 
     .home-color {
         height: 40px;
@@ -290,5 +291,24 @@ main {
     cursor: pointer;
     opacity: 100%;
     bottom: 5%;
-    left: 160px;
+    left: 80px;
+}
+
+.no-selected-tool {
+    opacity: 0;
+    position: absolute;
+    top: -10%;
+    width: 300px;
+    height: 100px;
+    left: 50%; 
+    margin: 0 0 0 -150px;
+    font-family: "Poppins";
+    text-align: center;
+    align-self: center;
+}
+
+.no-tool-alert {
+    opacity: 100%;
+    transition: 0.3s;
+    top: 8%;
 }
