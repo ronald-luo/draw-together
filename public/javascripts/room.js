@@ -242,6 +242,10 @@ window.addEventListener('load', () => {
             img.src = start_over
     
             socket.emit('send_draw', {png: start_over, room: roomID}) // emit canvas to server
+
+            if (redo.length > 0) {
+                redo = []
+            }
         } else {
             console.log('draw something first')
         }
